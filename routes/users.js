@@ -30,13 +30,13 @@ var models = initModels( sequelize );
 
 
   /* 4. Paso de parámetros a la vista */
-  res.render('crud', { title: 'CRUD of users', usersArray: usersCollection, rolesArray: rolesCollection   });
+  res.render('crud', {username: req.cookies['username'], title: 'CRUD of users', usersArray: usersCollection, rolesArray: rolesCollection   });
 
 });
 
 /* POST user. */
  /* 2. Cree el callback asíncrono que responda al método POST */
- router.post('/', async (req, res) => {
+router.post('/', async (req, res) => {
 
   /* 3. Desestructure los elementos en el cuerpo del requerimiento */
   let { name, password, idrole } = req.body;
