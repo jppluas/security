@@ -1,14 +1,21 @@
 var express = require('express');
 var router = express.Router();
 let crypto = require('crypto');
+let jwt = require('jsonwebtoken');
 
 const sequelize = require('../models/index.js').sequelize;
 var initModels = require("../models/init-models");
 var models = initModels(sequelize);
 
+
 /* Iniciar en la pantalla de login*/
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Login' });
+});
+
+router.get('/token', function(req, res, next) {
+  const token = jwt.sign({ role: 'user' }, 'your_secret_key', { expiresIn: '1h' });
+  res.render('ticket',  {username: req.cookies['username'], title: 'Token', token: token} );
 });
 
 /* 3. Cree el callback asíncrono que responda al método POST */
@@ -65,7 +72,12 @@ router.post('/login', async function (req, res, next) {
           req.session.role = userData.users_roles.roles_idrole_role.name
 
           /* 10. En caso de éxito, redirija a '/users' */
-          res.redirect('/users');
+
+          if (req.session.role === 'admin') {
+            res.redirect('/users');
+          } else {
+            res.redirect('/token');
+          }
         } else {
           /* 11. En caso de fallo, redirija a '/' */
           res.redirect('/');

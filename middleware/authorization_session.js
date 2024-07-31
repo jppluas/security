@@ -1,7 +1,7 @@
  /* Autorización */
 
  var authorizationSession = (req, res, next) => {
-    if(process.env.ALL_GRANTED.includes(req.session.role)) {
+    if(process.env.ALL_GRANTED.includes(req.session.role) || process.env.ACCESS_TOKEN.includes(req.session.role)) {
         //Si es admin direcciona a la request enviada
         return next()
     } else{
