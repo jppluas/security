@@ -13,10 +13,6 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Login' });
 });
 
-router.get('/token', function(req, res, next) {
-  const token = jwt.sign({ role: 'user' }, 'your_secret_key', { expiresIn: '1h' });
-  res.render('ticket',  {username: req.cookies['username'], title: 'Token', token: token} );
-});
 
 /* 3. Cree el callback asíncrono que responda al método POST */
 router.post('/login', async function (req, res, next) {

@@ -93,3 +93,7 @@ body {
 	text-align: center;
     word-wrap: break-word;height: auto;
 }
+
+.form-control{
+	cursor: pointer;
+}
